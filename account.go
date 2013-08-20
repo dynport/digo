@@ -90,11 +90,11 @@ func (account *Account) DestroyDroplet(id int) (*EventResponse, error) {
 }
 
 func (account *Account) ImageName(i int) string {
-	if images, e := account.CachedImages(); e != nil {
+	images, e := account.CachedImages()
+	if e != nil {
 		return ""
-	} else {
-		return images[i]
 	}
+	return images[i]
 }
 
 func (account *Account) CachedRegions() (hash map[int]string, e error) {
@@ -112,11 +112,11 @@ func (account *Account) CachedRegions() (hash map[int]string, e error) {
 }
 
 func (account *Account) RegionName(i int) string {
-	if regions, e := account.CachedRegions(); e != nil {
+	regions, e := account.CachedRegions()
+	if e != nil {
 		return ""
-	} else {
-		return regions[i]
 	}
+	return regions[i]
 }
 
 func (account *Account) CachedSizes() (hash map[int]string, e error) {
@@ -134,11 +134,11 @@ func (account *Account) CachedSizes() (hash map[int]string, e error) {
 }
 
 func (account *Account) SizeName(i int) string {
-	if sizes, e := account.CachedSizes(); e != nil {
+	sizes, e := account.CachedSizes()
+	if e != nil {
 		return ""
-	} else {
-		return sizes[i]
 	}
+	return sizes[i]
 }
 
 func (account *Account) DefaultDroplet() (droplet *Droplet) {
