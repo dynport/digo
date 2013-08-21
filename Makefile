@@ -13,7 +13,7 @@ clean:
 	rm -f ./godo
 
 install:
-	cp ./bin/godo /usr/local/bin/
+	go install github.com/dynport/digo 
 
 all: clean
 	go build -o ./bin/digo
