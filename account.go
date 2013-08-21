@@ -66,14 +66,23 @@ func (account *Account) CachedImages() (hash map[int]string, e error) {
 }
 
 func (a *Account) RebuildDroplet(id int, imageId int) (*EventResponse, error) {
-	logger.Infof("rebuilding droplet %d with image %d", id, imageId)
 	rsp := &EventResponse{}
+	if imageId == 0 {
+		droplet := &Droplet{ Id: id, Account: a }
+		if e := droplet.Reload(); e != nil {
+			return nil, e
+		}
+		imageId = droplet.ImageId
+	}
+	logger.Infof("rebuilding droplet %d and image %d", id, imageId)
 	path := fmt.Sprintf("/droplets/%d/rebuild?image_id=%d", id, imageId)
 	if e := a.loadResource(path, rsp); e != nil {
 		return nil, e
 	}
 	if rsp.Status != "OK" {
-		return rsp, fmt.Errorf("error rebuilding droplet")
+		err := "error rebuilding droplet: " + rsp.ErrorMessage
+		logger.Error(err)
+		return rsp, fmt.Errorf(err)
 	}
 	return rsp, nil
 }
