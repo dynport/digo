@@ -1,6 +1,7 @@
 language: go
 
 install:
+  - go get -d -v ./... && go build -v ./...
   - go get -v github.com/stretchr/testify/assert
   - go test -i
 
