@@ -7,10 +7,6 @@ import (
 	"strconv"
 )
 
-type CreateDropletAction struct {
-	args *gocli.Args
-}
-
 func init() {
 	args := &gocli.Args{}
 	args.RegisterInt("-i", false, CurrentAccount().ImageId, "Image id for new droplet")
