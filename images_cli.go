@@ -9,7 +9,7 @@ import (
 
 func init() {
 	cli.Register(
-		"size/list",
+		"image/list",
 		&gocli.Action{
 			Description: "List available droplet images",
 			Handler:     ListImages,
