@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/dynport/gologger"
 	"strconv"
 	"time"
-	"github.com/dynport/gologger"
 )
 
 type DropletResponse struct {

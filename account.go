@@ -28,6 +28,12 @@ type Account struct {
 	cachedRegions map[int]string
 }
 
+func (a *Account) GetDroplet(id int) (*Droplet, error) {
+	droplet := &Droplet{Id: id, Account: a}
+	e := droplet.Reload()
+	return droplet, e
+}
+
 type SshKeysResponse struct {
 	Status string    `json:"status"`
 	Keys   []*SshKey `json:"ssh_keys"`
@@ -68,7 +74,7 @@ func (account *Account) CachedImages() (hash map[int]string, e error) {
 func (a *Account) RebuildDroplet(id int, imageId int) (*EventResponse, error) {
 	rsp := &EventResponse{}
 	if imageId == 0 {
-		droplet := &Droplet{ Id: id, Account: a }
+		droplet := &Droplet{Id: id, Account: a}
 		if e := droplet.Reload(); e != nil {
 			return nil, e
 		}

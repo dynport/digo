@@ -5,6 +5,7 @@ import (
 	"github.com/dynport/gocli"
 	"os"
 	"strconv"
+	"time"
 )
 
 func init() {
@@ -23,6 +24,36 @@ func init() {
 			Args:        args,
 		},
 	)
+}
+
+func init() {
+	cli.Register("droplet/info",
+		&gocli.Action{
+			Handler:     DescribeDroplet,
+			Description: "Describe Droplet",
+		},
+	)
+}
+
+func DescribeDroplet(args *gocli.Args) error {
+	if len(args.Args) != 1 {
+		return fmt.Errorf("USAGE: <droplet_id>")
+	}
+	i, e := strconv.Atoi(args.Args[0])
+	if e != nil {
+		return e
+	}
+	droplet, e := CurrentAccount().GetDroplet(i)
+	if e != nil {
+		return e
+	}
+	table := gocli.NewTable()
+	table.Add("Id", fmt.Sprintf("%d", droplet.Id))
+	table.Add("Name", droplet.Name)
+	table.Add("Status", droplet.Status)
+	table.Add("Locked", strconv.FormatBool(droplet.Locked))
+	fmt.Println(table)
+	return nil
 }
 
 func init() {
@@ -121,12 +152,34 @@ func DestroyDroplet(args *gocli.Args) error {
 	}
 	for _, id := range args.Args {
 		if i, e := strconv.Atoi(id); e == nil {
-			logger.Infof("destroying droplet %d", i)
-			rsp, e := CurrentAccount().DestroyDroplet(i)
+			logger.Prefix = fmt.Sprintf("droplet-%d", i)
+			droplet, e := CurrentAccount().GetDroplet(i)
+			if e != nil {
+				logger.Errorf("unable to get droplet for %d", i)
+				continue
+			}
+			logger.Infof("destroying droplet %d", droplet.Id)
+			rsp, e := CurrentAccount().DestroyDroplet(droplet.Id)
 			if e != nil {
 				return e
 			}
 			logger.Debugf("got response %+v", rsp)
+			started := time.Now()
+			archived := false
+			for i := 0; i < 300; i++ {
+				droplet.Reload()
+				if droplet.Status == "archive" {
+					archived = true
+					break
+				}
+				logger.Info("status " + droplet.Status)
+				time.Sleep(1 * time.Second)
+			}
+			if !archived {
+				logger.Errorf("error archiving %d", droplet.Id)
+			} else {
+				logger.Debugf("archived in %.06f", time.Now().Sub(started).Seconds())
+			}
 		}
 	}
 	return nil

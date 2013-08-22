@@ -2,16 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/dynport/gologger"
 	"github.com/dynport/gocli"
+	"github.com/dynport/gologger"
 	"os"
 	"strconv"
 	"strings"
 )
 
 var (
-	cli    = &gocli.Router{}
-	logger = gologger.New()
+	cli     = &gocli.Router{}
+	logger  = gologger.New()
 	account *Account
 )
 
