@@ -9,24 +9,6 @@ import (
 )
 
 func init() {
-	args := &gocli.Args{}
-	args.RegisterInt("-i", false, CurrentAccount().ImageId, "Image id for new droplet")
-	args.RegisterInt("-r", false, CurrentAccount().RegionId, "Region id for new droplet")
-	args.RegisterInt("-s", false, CurrentAccount().SizeId, "Size id for new droplet")
-	args.RegisterInt("-k", false, CurrentAccount().SshKey, "Ssh key to be used")
-
-	cli.Register(
-		"droplet/create",
-		&gocli.Action{
-			Description: "Create new droplet",
-			Usage:       "<name>",
-			Handler:     CreateDropletAction,
-			Args:        args,
-		},
-	)
-}
-
-func init() {
 	cli.Register("droplet/info",
 		&gocli.Action{
 			Handler:     DescribeDropletAction,
@@ -99,6 +81,24 @@ func ListDropletsAction(args *gocli.Args) (e error) {
 	}
 	fmt.Fprintln(os.Stdout, table.String())
 	return nil
+}
+
+func init() {
+	args := &gocli.Args{}
+	args.RegisterInt("-i", false, CurrentAccount().ImageId, "Image id for new droplet")
+	args.RegisterInt("-r", false, CurrentAccount().RegionId, "Region id for new droplet")
+	args.RegisterInt("-s", false, CurrentAccount().SizeId, "Size id for new droplet")
+	args.RegisterInt("-k", false, CurrentAccount().SshKey, "Ssh key to be used")
+
+	cli.Register(
+		"droplet/create",
+		&gocli.Action{
+			Description: "Create new droplet",
+			Usage:       "<name>",
+			Handler:     CreateDropletAction,
+			Args:        args,
+		},
+	)
 }
 
 func CreateDropletAction(a *gocli.Args) error {
