@@ -131,7 +131,9 @@ func CreateDroplet(a *gocli.Args) error {
 	}
 	droplet.Account = CurrentAccount()
 	logger.Infof("created droplet with id %d", droplet.Id)
-	return WaitForDroplet(droplet)
+	e = WaitForDroplet(droplet)
+	logger.Infof("droplet %d ready", droplet.Id)
+	return e
 }
 
 func init() {
@@ -172,9 +174,11 @@ func DestroyDroplet(args *gocli.Args) error {
 					archived = true
 					break
 				}
-				logger.Info("status " + droplet.Status)
+				logger.Debug("status " + droplet.Status)
+				fmt.Print(".")
 				time.Sleep(1 * time.Second)
 			}
+			logger.Info("\ndroplet destroyed")
 			if !archived {
 				logger.Errorf("error archiving %d", droplet.Id)
 			} else {
