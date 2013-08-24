@@ -12,12 +12,12 @@ func init() {
 		"region/list",
 		&gocli.Action{
 			Description: "List available droplet regions",
-			Handler:     ListRegions,
+			Handler:     ListRegionsAction,
 		},
 	)
 }
 
-func ListRegions(args *gocli.Args) error {
+func ListRegionsAction(args *gocli.Args) error {
 	logger.Debug("listing regions")
 	account, e := AccountFromEnv()
 	if e != nil {

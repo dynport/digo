@@ -12,12 +12,12 @@ func init() {
 		"size/list",
 		&gocli.Action{
 			Description: "List available droplet sizes",
-			Handler:     ListSizes,
+			Handler:     ListSizesAction,
 		},
 	)
 }
 
-func ListSizes(args *gocli.Args) error {
+func ListSizesAction(args *gocli.Args) error {
 	logger.Debug("listing sizes")
 	account, e := AccountFromEnv()
 	if e != nil {

@@ -20,7 +20,7 @@ func init() {
 		&gocli.Action{
 			Description: "Create new droplet",
 			Usage:       "<name>",
-			Handler:     CreateDroplet,
+			Handler:     CreateDropletAction,
 			Args:        args,
 		},
 	)
@@ -29,13 +29,13 @@ func init() {
 func init() {
 	cli.Register("droplet/info",
 		&gocli.Action{
-			Handler:     DescribeDroplet,
+			Handler:     DescribeDropletAction,
 			Description: "Describe Droplet",
 		},
 	)
 }
 
-func DescribeDroplet(args *gocli.Args) error {
+func DescribeDropletAction(args *gocli.Args) error {
 	if len(args.Args) != 1 {
 		return fmt.Errorf("USAGE: <droplet_id>")
 	}
@@ -60,13 +60,13 @@ func init() {
 	cli.Register(
 		"droplet/list",
 		&gocli.Action{
-			Handler:     ListDroplets,
+			Handler:     ListDropletsAction,
 			Description: "List active droplets",
 		},
 	)
 }
 
-func ListDroplets(args *gocli.Args) (e error) {
+func ListDropletsAction(args *gocli.Args) (e error) {
 	logger.Debug("listing droplets")
 
 	droplets, e := CurrentAccount().Droplets()
@@ -101,7 +101,7 @@ func ListDroplets(args *gocli.Args) (e error) {
 	return nil
 }
 
-func CreateDroplet(a *gocli.Args) error {
+func CreateDropletAction(a *gocli.Args) error {
 	logger.Debugf("would create a new droplet with %#v", a.Args)
 	if len(a.Args) != 1 {
 		return fmt.Errorf("USAGE: create droplet <name>")
@@ -141,13 +141,13 @@ func init() {
 		"droplet/destroy",
 		&gocli.Action{
 			Description: "Destroy droplet",
-			Handler:     DestroyDroplet,
+			Handler:     DestroyDropletAction,
 			Usage:       "<droplet_id>",
 		},
 	)
 }
 
-func DestroyDroplet(args *gocli.Args) error {
+func DestroyDropletAction(args *gocli.Args) error {
 	logger.Debugf("would destroy droplet with %#v", args)
 	if len(args.Args) == 0 {
 		return fmt.Errorf("USAGE: droplet destroy id1,id2,id3")
@@ -196,14 +196,14 @@ func init() {
 		"droplet/rebuild",
 		&gocli.Action{
 			Description: "Rebuild droplet",
-			Handler:     RebuildDroplet,
+			Handler:     RebuildDropletAction,
 			Usage:       "<droplet_id>",
 			Args:        args,
 		},
 	)
 }
 
-func RebuildDroplet(a *gocli.Args) error {
+func RebuildDropletAction(a *gocli.Args) error {
 	if len(a.Args) != 1 {
 		return fmt.Errorf("USAGE: droplet rebuild <id>")
 	}

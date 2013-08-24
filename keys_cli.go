@@ -12,12 +12,12 @@ func init() {
 		"key/list",
 		&gocli.Action{
 			Description: "List available ssh keys",
-			Handler:     ListKeys,
+			Handler:     ListKeysAction,
 		},
 	)
 }
 
-func ListKeys(args *gocli.Args) error {
+func ListKeysAction(args *gocli.Args) error {
 	table := gocli.NewTable()
 	table.Add("Id", "Name")
 	keys, e := CurrentAccount().SshKeys()

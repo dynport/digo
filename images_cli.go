@@ -12,12 +12,12 @@ func init() {
 		"image/list",
 		&gocli.Action{
 			Description: "List available droplet images",
-			Handler:     ListImages,
+			Handler:     ListImagesAction,
 		},
 	)
 }
 
-func ListImages(args *gocli.Args) error {
+func ListImagesAction(args *gocli.Args) error {
 	logger.Debug("listing images")
 	logger.Debugf("account is %+v", CurrentAccount())
 	table := gocli.NewTable()
