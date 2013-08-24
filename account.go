@@ -189,6 +189,7 @@ func (account *Account) getJSON(path string) (b []byte, e error) {
 	if e != nil {
 		return
 	}
+	defer rsp.Body.Close()
 	logger.Debugf("got status %s", rsp.Status)
 	if !strings.HasPrefix(rsp.Status, "2") {
 		b, e := ioutil.ReadAll(rsp.Body)
