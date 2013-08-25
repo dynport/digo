@@ -170,7 +170,7 @@ func DestroyDropletAction(args *gocli.Args) error {
 			archived := false
 			for i := 0; i < 300; i++ {
 				droplet.Reload()
-				if droplet.Status == "archive" {
+				if droplet.Status == "archive" || droplet.Status == "off" {
 					archived = true
 					break
 				}
