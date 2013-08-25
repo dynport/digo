@@ -19,6 +19,12 @@ func CurrentAccount() *Account {
 	if account == nil {
 		var e error
 		account, e = AccountFromEnv()
+		if account.RegionId == 0 {
+			account.RegionId = REGION_SF1
+		}
+		if account.SizeId == 0 {
+			account.SizeId = SIZE_512M
+		}
 		if e != nil {
 			ExitWith("unable to load account from env: " + e.Error())
 		}
