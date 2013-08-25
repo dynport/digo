@@ -179,7 +179,8 @@ func DestroyDropletAction(args *gocli.Args) error {
 				fmt.Print(".")
 				time.Sleep(1 * time.Second)
 			}
-			logger.Info("\ndroplet destroyed")
+			fmt.Print("\n")
+			logger.Info("droplet destroyed")
 			if !archived {
 				logger.Errorf("error archiving %d", droplet.Id)
 			} else {
