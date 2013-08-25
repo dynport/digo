@@ -102,6 +102,7 @@ func init() {
 }
 
 func CreateDropletAction(a *gocli.Args) error {
+	started := time.Now()
 	logger.Debugf("would create a new droplet with %#v", a.Args)
 	if len(a.Args) != 1 {
 		return fmt.Errorf("USAGE: create droplet <name>")
@@ -132,7 +133,7 @@ func CreateDropletAction(a *gocli.Args) error {
 	droplet.Account = CurrentAccount()
 	logger.Infof("created droplet with id %d", droplet.Id)
 	e = WaitForDroplet(droplet)
-	logger.Infof("droplet %d ready", droplet.Id)
+	logger.Infof("droplet %d ready, ip: %s. total_time: %.1fs", droplet.Id, droplet.IpAddress, time.Now().Sub(started).Seconds())
 	return e
 }
 
