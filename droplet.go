@@ -49,7 +49,7 @@ func (droplet *Droplet) Reload() error {
 
 func WaitForDroplet(droplet *Droplet) error {
 	started := time.Now()
-	logger.Debugf("waiting for droplet %+v", droplet)
+	logger.Infof("waiting for droplet %d", droplet.Id)
 	level := logger.LogLevel
 	defer func(level int) {
 		logger.LogLevel = level
