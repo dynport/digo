@@ -19,21 +19,50 @@ These env settings can be set optionally:
     export DIGITAL_OCEAN_DEFULT_SSH_KEY=<secret_id>
 
 ## Installation
-    
-    go get -u github.com/dynport/digo
+  
+Download and extract the apropriate binaries from `https://github.com/dynport/digo/releases` to e.g. `/usr/local/bin/`.
 
 ## Usage
     $ digo --help
     USAGE
-    droplet	create 	<name>      	Create new droplet                            
-                                  -i DEFAULT: "350076" Image id for new droplet 
-                                  -r DEFAULT: "2"      Region id for new droplet
-                                  -s DEFAULT: "66"     Size id for new droplet  
-                                  -k DEFAULT: "<secret>"  Ssh key to be used       
-    droplet	destroy	<droplet_id>	Destroy droplet                               
-    droplet	list   	            	List active droplets                          
-    droplet	rebuild	<droplet_id>	Rebuild droplet                               
-                                  -i DEFAULT: "0" Rebuild droplet               
-    key    	list   	            	List available ssh keys                       
-    region 	list   	            	List available droplet regions                
-    size   	list   	            	List available droplet sizes                  
+    droplet	create 	<name>                 	Create new droplet                            
+                                            -i DEFAULT: "350076" Image id for new droplet 
+                                            -r DEFAULT: "2"      Region id for new droplet
+                                            -s DEFAULT: "66"     Size id for new droplet  
+                                            -k DEFAULT: "22197"  Ssh key to be used       
+    droplet	destroy	<droplet_id>           	Destroy droplet                               
+    droplet	info   	                       	Describe Droplet                              
+    droplet	list   	                       	List active droplets                          
+    droplet	rebuild	<droplet_id>           	Rebuild droplet                               
+                                            -i DEFAULT: "0" Rebuild droplet               
+    droplet	rename 	<droplet_id> <new_name>	Describe Droplet                              
+    image  	list   	                       	List available droplet images                 
+    key    	list   	                       	List available ssh keys                       
+    region 	list   	                       	List available droplet regions                
+    size   	list   	                       	List available droplet sizes                  
+    version	       	                       	Print version and revision                    
+
+## Todos (not implemented yet)
+
+Most of the missing functionality should be straight to implement (best with some refactorings to DRY things up).
+
+* droplets/reboot
+* droplets/power_cycle
+* droplets/shutdown
+* droplets/power_on
+* droplets/power_off
+* droplets/password_reset
+* droplets/resize
+* droplets/snapshot
+* droplets/restore
+* droplets/enable_backups
+* droplets/disable_backups
+
+* images/destroy
+* images/transfer
+
+* ssh_keys/new
+* ssh_keys/edit
+* ssh_keys/destroy
+
+* domains (all of it)
