@@ -20,7 +20,7 @@ These env settings can be set optionally:
 
 ## Installation
   
-Download and extract the apropriate binaries from `https://github.com/dynport/digo/releases` to e.g. `/usr/local/bin/`.
+Download and extract the appropriate binaries from [github.com/dynport/digo/releases](https://github.com/dynport/digo/releases) to e.g. `/usr/local/bin/`.
 
 ## Usage
     $ digo --help
