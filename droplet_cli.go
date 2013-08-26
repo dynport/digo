@@ -8,6 +8,36 @@ import (
 	"time"
 )
 
+const RENAME_USAGE =  "<droplet_id> <new_name>"
+
+func init() {
+	cli.Register("droplet/rename",
+		&gocli.Action{
+			Handler:     RenameDropletAction,
+			Description: "Describe Droplet",
+			Usage: RENAME_USAGE,
+		},
+	)
+}
+
+func RenameDropletAction(args *gocli.Args) error {
+	if len(args.Args) != 2 {
+		fmt.Errorf(RENAME_USAGE)
+	}
+	id, newName := args.Args[0], args.Args[1]
+	i, e := strconv.Atoi(id)
+	if e != nil {
+		return e
+	}
+	logger.Infof("renaming droplet %d to %s", i, newName)
+	_, e = CurrentAccount().RenameDroplet(i, newName)
+	if e != nil {
+		return e
+	}
+	logger.Infof("renamed droplet %d to %s", i, newName)
+	return nil
+}
+
 func init() {
 	cli.Register("droplet/info",
 		&gocli.Action{

@@ -71,8 +71,21 @@ func (account *Account) CachedImages() (hash map[int]string, e error) {
 	return account.cachedImages, e
 }
 
-func (a *Account) RebuildDroplet(id int, imageId int) (*EventResponse, error) {
+func (a *Account) RenameDroplet(id int, name string) (*EventResponse, error) {
 	rsp := &EventResponse{}
+	path := fmt.Sprintf("/droplets/%d/rename?name=%s", id, name)
+	if e := a.loadResource(path, rsp); e != nil {
+		return nil, e
+	}
+	if rsp.Status != "OK" {
+		err := "error renaming droplet: " + rsp.ErrorMessage
+		logger.Error(err)
+		return rsp, fmt.Errorf(err)
+	}
+	return rsp, nil
+}
+
+func (a *Account) RebuildDroplet(id int, imageId int) (*EventResponse, error) {
 	if imageId == 0 {
 		droplet := &Droplet{Id: id, Account: a}
 		if e := droplet.Reload(); e != nil {
@@ -80,6 +93,7 @@ func (a *Account) RebuildDroplet(id int, imageId int) (*EventResponse, error) {
 		}
 		imageId = droplet.ImageId
 	}
+	rsp := &EventResponse{}
 	logger.Infof("rebuilding droplet %d and image %d", id, imageId)
 	path := fmt.Sprintf("/droplets/%d/rebuild?image_id=%d", id, imageId)
 	if e := a.loadResource(path, rsp); e != nil {
