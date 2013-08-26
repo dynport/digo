@@ -46,23 +46,39 @@ Download and extract the apropriate binaries from `https://github.com/dynport/di
 
 Most of the missing functionality should be straight to implement (best with some refactorings to DRY things up).
 
-* droplets/reboot
-* droplets/power_cycle
-* droplets/shutdown
-* droplets/power_on
-* droplets/power_off
-* droplets/password_reset
-* droplets/resize
-* droplets/snapshot
-* droplets/restore
-* droplets/enable_backups
-* droplets/disable_backups
+### Droplets
 
-* images/destroy
-* images/transfer
+* reboot
+* power_cycle
+* shutdown
+* power_on
+* power_off
+* password_reset
+* resize
+* snapshot
+* restore
+* enable_backups
+* disable_backups
 
-* ssh_keys/new
-* ssh_keys/edit
-* ssh_keys/destroy
+### Images
+* show
+* destroy
+* transfer
 
-* domains (all of it)
+### SSH Keys
+* new
+* show
+* edit
+* destroy
+
+### Domains
+
+* index
+* new
+* show
+* destroy
+* records
+* records/new
+* records/show
+* records/edit
+* records/destroy
