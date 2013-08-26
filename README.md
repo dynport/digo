@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/dynport/digo.png?branch=master)](https://travis-ci.org/dynport/digo)
 
-DigitalOcean API cli tool and library for golang
+[DigitalOcean](https://www.digitalocean.com/?refcode=b06a6a609632) API cli tool and library for golang
 
 ## Requirements
 
