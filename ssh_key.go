@@ -1,4 +1,4 @@
-package main
+package digo
 
 type SshKey struct {
 	Id   int    `json:"id"`

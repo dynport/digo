@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/dynport/digo"
 	"github.com/dynport/gocli"
 	"os"
 	"strconv"
@@ -137,7 +138,7 @@ func CreateDropletAction(a *gocli.Args) error {
 	if len(a.Args) != 1 {
 		return fmt.Errorf("USAGE: create droplet <name>")
 	}
-	droplet := &Droplet{Name: a.Args[0]}
+	droplet := &digo.Droplet{Name: a.Args[0]}
 
 	var e error
 	if droplet.SizeId, e = a.GetInt("-s"); e != nil {
@@ -162,7 +163,7 @@ func CreateDropletAction(a *gocli.Args) error {
 	}
 	droplet.Account = CurrentAccount()
 	logger.Infof("created droplet with id %d", droplet.Id)
-	e = WaitForDroplet(droplet)
+	e = digo.WaitForDroplet(droplet)
 	logger.Infof("droplet %d ready, ip: %s. total_time: %.1fs", droplet.Id, droplet.IpAddress, time.Now().Sub(started).Seconds())
 	return e
 }
@@ -254,6 +255,6 @@ func RebuildDropletAction(a *gocli.Args) error {
 		return e
 	}
 	logger.Debugf("got response %+v", rsp)
-	droplet := &Droplet{Id: i, Account: account}
-	return WaitForDroplet(droplet)
+	droplet := &digo.Droplet{Id: i, Account: account}
+	return digo.WaitForDroplet(droplet)
 }

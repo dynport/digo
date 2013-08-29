@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/dynport/gocli"
 	"github.com/dynport/gologger"
+	"github.com/dynport/digo"
 	"os"
 	"strconv"
 	"strings"
@@ -12,18 +13,18 @@ import (
 var (
 	cli     = &gocli.Router{}
 	logger  = gologger.New()
-	account *Account
+	account *digo.Account
 )
 
-func CurrentAccount() *Account {
+func CurrentAccount() *digo.Account {
 	if account == nil {
 		var e error
 		account, e = AccountFromEnv()
 		if account.RegionId == 0 {
-			account.RegionId = REGION_SF1
+			account.RegionId = digo.REGION_SF1
 		}
 		if account.SizeId == 0 {
-			account.SizeId = SIZE_512M
+			account.SizeId = digo.SIZE_512M
 		}
 		if e != nil {
 			ExitWith("unable to load account from env: " + e.Error())
@@ -54,8 +55,8 @@ const (
 	DIGITAL_OCEAN_DEFULT_SSH_KEY    = "DIGITAL_OCEAN_DEFULT_SSH_KEY"
 )
 
-func AccountFromEnv() (*Account, error) {
-	account := &Account{}
+func AccountFromEnv() (*digo.Account, error) {
+	account := &digo.Account{}
 	account.ClientId = os.Getenv(DIGITAL_OCEAN_CLIENT_ID)
 	account.ApiKey = os.Getenv(DIGITAL_OCEAN_API_KEY)
 	account.RegionId, _ = strconv.Atoi(os.Getenv(DIGITAL_OCEAN_DEFAULT_REGION_ID))

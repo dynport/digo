@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/dynport/digo"
 	"github.com/dynport/gocli"
 )
 
@@ -16,8 +17,8 @@ func init() {
 
 func VersionAction(args *gocli.Args) error {
 	table := gocli.NewTable()
-	table.Add("Version", VERSION)
-	table.Add("Revision", GITCOMMIT)
+	table.Add("Version", digo.VERSION)
+	table.Add("Revision", digo.GITCOMMIT)
 	fmt.Printf(table.String())
 	return nil
 }

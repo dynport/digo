@@ -1,4 +1,4 @@
-package main
+package digo
 
 type RegionResponse struct {
 	Status  string    `json:"status"`

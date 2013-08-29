@@ -1,4 +1,4 @@
-package main
+package digo
 
 type Size struct {
 	Id   int    `json:"id"`

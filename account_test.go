@@ -1,4 +1,4 @@
-package main
+package digo
 
 import (
 	"github.com/stretchr/testify/assert"
