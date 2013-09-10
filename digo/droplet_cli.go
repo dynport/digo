@@ -116,10 +116,10 @@ func ListDropletsAction(args *gocli.Args) (e error) {
 
 func init() {
 	args := &gocli.Args{}
-	args.RegisterInt("-i", false, CurrentAccount().ImageId, "Image id for new droplet")
-	args.RegisterInt("-r", false, CurrentAccount().RegionId, "Region id for new droplet")
-	args.RegisterInt("-s", false, CurrentAccount().SizeId, "Size id for new droplet")
-	args.RegisterInt("-k", false, CurrentAccount().SshKey, "Ssh key to be used")
+	args.RegisterInt("-i", "image_id", false, CurrentAccount().ImageId, "Image id for new droplet")
+	args.RegisterInt("-r", "region_id", false, CurrentAccount().RegionId, "Region id for new droplet")
+	args.RegisterInt("-s", "size_id", false, CurrentAccount().SizeId, "Size id for new droplet")
+	args.RegisterInt("-k", "ssh_key_id", false, CurrentAccount().SshKey, "Ssh key to be used")
 
 	cli.Register(
 		"droplet/create",
@@ -224,7 +224,7 @@ func DestroyDropletAction(args *gocli.Args) error {
 
 func init() {
 	args := &gocli.Args{}
-	args.RegisterInt("-i", false, 0, "Rebuild droplet")
+	args.RegisterInt("-i", "image_id", false, 0, "Rebuild droplet")
 	cli.Register(
 		"droplet/rebuild",
 		&gocli.Action{
