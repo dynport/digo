@@ -18,16 +18,17 @@ type DropletsResponse struct {
 }
 
 type Droplet struct {
-	Id        int       `json:"id"`
-	ImageId   int       `json:"image_id"`
-	SizeId    int       `json:"size_id"`
-	RegionId  int       `json:"region_id"`
-	Name      string    `json:"name"`
-	IpAddress string    `json:"ip_address"`
-	Locked    bool      `json:"locked"`
-	Status    string    `json:"status"`
-	CreatedAt time.Time `json:"created_at"`
-	SshKey    int
+	Id             int       `json:"id"`
+	ImageId        int       `json:"image_id"`
+	SizeId         int       `json:"size_id"`
+	RegionId       int       `json:"region_id"`
+	Name           string    `json:"name"`
+	IpAddress      string    `json:"ip_address"`
+	Locked         bool      `json:"locked"`
+	Status         string    `json:"status"`
+	CreatedAt      time.Time `json:"created_at"`
+	PrivateNetwork bool      `json:"private_network"`
+	SshKey         int
 	*Account
 }
 

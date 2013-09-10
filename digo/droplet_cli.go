@@ -9,14 +9,14 @@ import (
 	"time"
 )
 
-const RENAME_USAGE =  "<droplet_id> <new_name>"
+const RENAME_USAGE = "<droplet_id> <new_name>"
 
 func init() {
 	cli.Register("droplet/rename",
 		&gocli.Action{
 			Handler:     RenameDropletAction,
 			Description: "Describe Droplet",
-			Usage: RENAME_USAGE,
+			Usage:       RENAME_USAGE,
 		},
 	)
 }
@@ -120,6 +120,7 @@ func init() {
 	args.RegisterInt("-r", "region_id", false, CurrentAccount().RegionId, "Region id for new droplet")
 	args.RegisterInt("-s", "size_id", false, CurrentAccount().SizeId, "Size id for new droplet")
 	args.RegisterInt("-k", "ssh_key_id", false, CurrentAccount().SshKey, "Ssh key to be used")
+	args.RegisterBool("-p", "private_network", false, false, "Enable private network")
 
 	cli.Register(
 		"droplet/create",
@@ -156,6 +157,8 @@ func CreateDropletAction(a *gocli.Args) error {
 	if droplet.SshKey, e = a.GetInt("-k"); e != nil {
 		return e
 	}
+
+	droplet.PrivateNetwork = a.GetBool("-p")
 
 	droplet, e = CurrentAccount().CreateDroplet(droplet)
 	if e != nil {
