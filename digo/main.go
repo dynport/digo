@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/dynport/digo"
 	"github.com/dynport/gocli"
 	"github.com/dynport/gologger"
-	"github.com/dynport/digo"
 	"os"
 	"strconv"
 	"strings"
@@ -20,6 +20,10 @@ func CurrentAccount() *digo.Account {
 	if account == nil {
 		var e error
 		account, e = AccountFromEnv()
+		if e != nil {
+			logger.Error(e.Error())
+			os.Exit(1)
+		}
 		if account.RegionId == 0 {
 			account.RegionId = digo.REGION_SF1
 		}
