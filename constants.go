@@ -5,7 +5,7 @@ var (
 )
 
 const (
-	VERSION                  = "0.1.1"
+	VERSION                  = "0.1.2"
 	IMAGE_UBUNTU_13_04_64BIT = 350076
 	REGION_SF1               = 3
 	SIZE_512M                = 66
