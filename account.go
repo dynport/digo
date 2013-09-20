@@ -219,12 +219,27 @@ func (account *Account) getJSON(path string) (b []byte, e error) {
 	return
 }
 
+type GenericResponse struct {
+	Status       string `json:"status"`
+	ErrorMessage string `json:"error_message"`
+}
+
 func (account *Account) loadResource(path string, i interface{}) (e error) {
 	body, e := account.getJSON(path)
 	if e != nil {
 		logger.Error(string(body))
 		return
 	}
+
+	gr := &GenericResponse{}
+	e = json.Unmarshal(body, gr)
+	if e != nil {
+		return e
+	}
+	if gr.Status != "OK" {
+		return fmt.Errorf(gr.ErrorMessage)
+	}
+
 	e = json.Unmarshal(body, i)
 	if e != nil {
 		logger.Error(string(body))
