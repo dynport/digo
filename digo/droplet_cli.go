@@ -241,26 +241,29 @@ func SshDropletAction(args *gocli.Args) error {
 		return fmt.Errorf("USAGE: droplet ssh id1")
 	}
 	id := args.Args[0]
-	if i, e := strconv.Atoi(id); e == nil {
-		logger.Prefix = fmt.Sprintf("droplet-%d", i)
-		droplet, e := CurrentAccount().GetDroplet(i)
-		if e != nil {
-			logger.Errorf("unable to get droplet for %d", i)
-			return e
-		}
-		dropletIpAddress := droplet.IpAddress
-		dropletUsername := "root"
-		dropletUsernameIpAddress := fmt.Sprintf("%s@%s", dropletUsername, dropletIpAddress)
-		sshCmd, e := exec.LookPath("ssh")
-		if e != nil {
-			logger.Error("could not find ssh command")
-			return e
-		}
-		logger.Infof("ssh into droplet %d %s", droplet.Id, dropletUsernameIpAddress)
-		if e = syscall.Exec(sshCmd, []string{"ssh", dropletUsernameIpAddress}, []string{}); e != nil {
-			logger.Errorf("failed to ssh to droplet %d", i)
-			return e
-		}
+	i, e := strconv.Atoi(id)
+	if e != nil {
+		return fmt.Errorf("USAGE: droplet ssh id1")
+		return e
+	}
+	logger.Prefix = fmt.Sprintf("droplet-%d", i)
+	droplet, e := CurrentAccount().GetDroplet(i)
+	if e != nil {
+		logger.Errorf("unable to get droplet for %d", i)
+		return e
+	}
+	dropletIpAddress := droplet.IpAddress
+	dropletUsername := "root"
+	dropletUsernameIpAddress := fmt.Sprintf("%s@%s", dropletUsername, dropletIpAddress)
+	sshCmd, e := exec.LookPath("ssh")
+	if e != nil {
+		logger.Error("could not find ssh command")
+		return e
+	}
+	logger.Infof("ssh into droplet %d %s", droplet.Id, dropletUsernameIpAddress)
+	if e = syscall.Exec(sshCmd, []string{"ssh", dropletUsernameIpAddress}, []string{}); e != nil {
+		logger.Errorf("failed to ssh to droplet %d", i)
+		return e
 	}
 	return nil
 }
