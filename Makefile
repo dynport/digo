@@ -21,5 +21,5 @@ clean:
 	rm -f ./godo
 
 install:
-	go install -ldflags "-X main.GITCOMMIT $(GIT_REV)" github.com/dynport/digo 
-	go install github.com/dynport/digo/digo
+	go install github.com/dynport/digo
+	go install -ldflags "-X main.GITCOMMIT $(GIT_REV)" github.com/dynport/digo/digo
