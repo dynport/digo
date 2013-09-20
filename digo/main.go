@@ -59,7 +59,7 @@ const (
 	DIGITAL_OCEAN_DEFAULT_REGION_ID = "DIGITAL_OCEAN_DEFAULT_REGION_ID"
 	DIGITAL_OCEAN_DEFAULT_SIZE_ID   = "DIGITAL_OCEAN_DEFAULT_SIZE_ID"
 	DIGITAL_OCEAN_DEFAULT_IMAGE_ID  = "DIGITAL_OCEAN_DEFAULT_IMAGE_ID"
-	DIGITAL_OCEAN_DEFULT_SSH_KEY    = "DIGITAL_OCEAN_DEFULT_SSH_KEY"
+	DIGITAL_OCEAN_DEFAULT_SSH_KEY   = "DIGITAL_OCEAN_DEFAULT_SSH_KEY"
 )
 
 func AccountFromEnv() (*digo.Account, error) {
@@ -69,7 +69,7 @@ func AccountFromEnv() (*digo.Account, error) {
 	account.RegionId, _ = strconv.Atoi(os.Getenv(DIGITAL_OCEAN_DEFAULT_REGION_ID))
 	account.SizeId, _ = strconv.Atoi(os.Getenv(DIGITAL_OCEAN_DEFAULT_SIZE_ID))
 	account.ImageId, _ = strconv.Atoi(os.Getenv(DIGITAL_OCEAN_DEFAULT_IMAGE_ID))
-	account.SshKey, _ = strconv.Atoi(os.Getenv(DIGITAL_OCEAN_DEFULT_SSH_KEY))
+	account.SshKey, _ = strconv.Atoi(os.Getenv(DIGITAL_OCEAN_DEFAULT_SSH_KEY))
 
 	allErrors := []string{}
 

@@ -16,7 +16,7 @@ These env settings can be set optionally:
     export DIGITAL_OCEAN_DEFAULT_REGION_ID=2
     export DIGITAL_OCEAN_DEFAULT_SIZE_ID=66
     export DIGITAL_OCEAN_DEFAULT_IMAGE_ID=350076
-    export DIGITAL_OCEAN_DEFULT_SSH_KEY=<secret_id>
+    export DIGITAL_OCEAN_DEFAULT_SSH_KEY=<secret_id>
 
 ## Installation
   
