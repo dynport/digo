@@ -5,18 +5,20 @@ import (
 	"github.com/dynport/digo"
 	"github.com/dynport/gocli"
 	"os"
+	"os/exec"
 	"strconv"
+	"syscall"
 	"time"
 )
 
-const RENAME_USAGE =  "<droplet_id> <new_name>"
+const RENAME_USAGE = "<droplet_id> <new_name>"
 
 func init() {
 	cli.Register("droplet/rename",
 		&gocli.Action{
 			Handler:     RenameDropletAction,
 			Description: "Describe Droplet",
-			Usage: RENAME_USAGE,
+			Usage:       RENAME_USAGE,
 		},
 	)
 }
@@ -218,6 +220,50 @@ func DestroyDropletAction(args *gocli.Args) error {
 				logger.Debugf("archived in %.06f", time.Now().Sub(started).Seconds())
 			}
 		}
+	}
+	return nil
+}
+
+func init() {
+	cli.Register(
+		"droplet/ssh",
+		&gocli.Action{
+			Description: "SSH into droplet",
+			Handler:     SshDropletAction,
+			Usage:       "<droplet_id>",
+		},
+	)
+}
+
+func SshDropletAction(args *gocli.Args) error {
+	logger.Debugf("would ssh into droplet with %#v", args)
+	if len(args.Args) != 1 {
+		return fmt.Errorf("USAGE: droplet ssh id1")
+	}
+	id := args.Args[0]
+	i, e := strconv.Atoi(id)
+	if e != nil {
+		return fmt.Errorf("USAGE: droplet ssh id1")
+		return e
+	}
+	logger.Prefix = fmt.Sprintf("droplet-%d", i)
+	droplet, e := CurrentAccount().GetDroplet(i)
+	if e != nil {
+		logger.Errorf("unable to get droplet for %d", i)
+		return e
+	}
+	dropletIpAddress := droplet.IpAddress
+	dropletUsername := "root"
+	dropletUsernameIpAddress := fmt.Sprintf("%s@%s", dropletUsername, dropletIpAddress)
+	sshCmd, e := exec.LookPath("ssh")
+	if e != nil {
+		logger.Error("could not find ssh command")
+		return e
+	}
+	logger.Infof("ssh into droplet %d %s", droplet.Id, dropletUsernameIpAddress)
+	if e = syscall.Exec(sshCmd, []string{"ssh", dropletUsernameIpAddress}, []string{}); e != nil {
+		logger.Errorf("failed to ssh to droplet %d", i)
+		return e
 	}
 	return nil
 }
