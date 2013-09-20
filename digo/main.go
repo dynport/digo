@@ -24,6 +24,9 @@ func CurrentAccount() *digo.Account {
 			logger.Error(e.Error())
 			os.Exit(1)
 		}
+		if account.ImageId == 0 {
+			account.ImageId = digo.IMAGE_UBUNTU_13_04_64BIT
+		}
 		if account.RegionId == 0 {
 			account.RegionId = digo.REGION_SF1
 		}
