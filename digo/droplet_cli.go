@@ -223,6 +223,35 @@ func DestroyDropletAction(args *gocli.Args) error {
 }
 
 func init() {
+	cli.Register(
+		"droplet/ssh",
+		&gocli.Action{
+			Description: "SSH into droplet",
+			Handler:     SshDropletAction,
+			Usage:       "<droplet_id>",
+		},
+	)
+}
+
+func SshDropletAction(args *gocli.Args) error {
+	logger.Debugf("would ssh into droplet with %#v", args)
+	if len(args.Args) != 1 {
+		return fmt.Errorf("USAGE: droplet ssh id1")
+	}
+	id := args.Args[0]
+	if i, e := strconv.Atoi(id); e == nil {
+		logger.Prefix = fmt.Sprintf("droplet-%d", i)
+		droplet, e := CurrentAccount().GetDroplet(i)
+		if e != nil {
+			logger.Errorf("unable to get droplet for %d", i)
+			return e
+		}
+		logger.Infof("ssh into droplet %d", droplet.Id)
+	}
+	return nil
+}
+
+func init() {
 	args := &gocli.Args{}
 	args.RegisterInt("-i", "image_id", false, 0, "Rebuild droplet")
 	cli.Register(
