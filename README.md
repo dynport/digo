@@ -70,15 +70,3 @@ Most of the missing functionality should be straight to implement (best with som
 * show
 * edit
 * destroy
-
-### Domains
-
-* index
-* new
-* show
-* destroy
-* records
-* records/new
-* records/show
-* records/edit
-* records/destroy
